@@ -1,54 +1,74 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using Pong.Script.Message;
 using Pong.Script.PlayersAndGoal;
+using Pong.Script.Struct;
 using UnityEngine;
 
 namespace Pong.Script
 {
     public class ControllerPong : MonoBehaviour
     {
-        [SerializeField] private StructPlayer[] _structPlayer;
-        [SerializeField] private MessageHander _messageHander;
-        [SerializeField] private MessageUi _messageUi;
+        [SerializeField] private StructGamePong GamePong;
+        private MessageHander _messageHander;
+        private bool gameInProgress = false;
 
-        private int PlayerOneScore = 0;
-        private int PlayerTwoScore = 0;
+        public void lunchGame()
+        {
+            gameInProgress = true;
 
-        //  public Collider test; 
+            StartCoroutine(timerStart());
+        }
+
+        private int timer = 0;
+
+        IEnumerator timerStart()
+        {
+            timer = timer + 1;
+            Debug.Log(timer);
+            yield return new WaitForSeconds(1);
+            if (timer <= 3)
+            {
+                StartCoroutine(timerStart());
+            }
+        }
+
         public void Update()
         {
             if (Input.GetKey(KeyCode.Z))
             {
-                _structPlayer[0].Player.moveUp();
+                GamePong._structPlayer[0].Player.moveUp();
             }
 
             if (Input.GetKey(KeyCode.S))
             {
-                _structPlayer[0].Player.moveDown();
+                GamePong._structPlayer[0].Player.moveDown();
             }
 
             if (Input.GetKey("up"))
             {
-                _structPlayer[1].Player.moveUp();
+                GamePong._structPlayer[1].Player.moveUp();
             }
 
             if (Input.GetKey("down"))
             {
-                _structPlayer[1].Player.moveDown();
+                GamePong._structPlayer[1].Player.moveDown();
             }
 
-            if (_structPlayer[0].Goal.hit == true)
+            if (GamePong._structPlayer[0].Goal.hit == true)
             {
-                _structPlayer[0].Goal.hit = false;
-                playerGoal(_structPlayer[1].Player);
+                GamePong._structPlayer[0].Goal.hit = false;
+                playerGoal(GamePong._structPlayer[1].Player);
             }
 
-            if (_structPlayer[1].Goal.hit == true)
+            if (GamePong._structPlayer[1].Goal.hit == true)
             {
-                _structPlayer[1].Goal.hit = false;
-                playerGoal(_structPlayer[0].Player);
+                GamePong._structPlayer[1].Goal.hit = false;
+                playerGoal(GamePong._structPlayer[0].Player);
             }
         }
+
         public void playerGoal(Player player)
         {
             var mesg = _messageHander.VictoryMesg(player);
@@ -58,9 +78,8 @@ namespace Pong.Script
 
         public void VictoryPrint(string mesg)
         {
-            _messageUi.MessageInfo.text = mesg;
-            _messageUi.MessageInfo.gameObject.SetActive(true);
+            this.GamePong.MessageInfo.text = mesg;
+            this.GamePong.MessageInfo.gameObject.SetActive(true);
         }
-        
     }
 }

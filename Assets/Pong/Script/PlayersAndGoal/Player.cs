@@ -6,6 +6,10 @@ namespace Pong.Script.PlayersAndGoal
     {
         public int speedMove;
 
+        public string Pseudo;
+
+        public int PlayerScore;
+
         public void moveUp()
         {
             gameObject.transform.position =

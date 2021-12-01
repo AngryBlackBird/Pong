@@ -5,19 +5,13 @@ using UnityEngine.UI;
 
 namespace Pong.Script.Message
 {
-    [Serializable]
-    public struct MessageUi
-    {
-        public Text MessageInfo;
-    }
-
-
-    [Serializable]
+    
+ 
     public class MessageHander
     {
         public string VictoryMesg(Player player)
         {
-            var message = player.name + " Gagne !";
+            var message = player.Pseudo + " Gagne !";
             return message;
         }
     }

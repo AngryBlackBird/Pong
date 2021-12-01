@@ -7,5 +7,6 @@ namespace Pong.Script.PlayersAndGoal
     {
         public Player Player;
         public Goal Goal;
+        
     }
 }

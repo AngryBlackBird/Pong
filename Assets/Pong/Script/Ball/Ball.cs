@@ -6,11 +6,11 @@ namespace Pong.Script.Ball
     {
         public Rigidbody2D Rigidbody2D;
 
-        public Vector2 addForce;
-
-        public void Start()
+        public Vector2 addlvlForce;
+        
+        public void addingForce()
         {
-            Rigidbody2D.AddForce(addForce);
+            Rigidbody2D.AddForce(addlvlForce);
         }
     }
 }
