@@ -5,33 +5,28 @@ using Pong.Script.Message;
 using Pong.Script.PlayersAndGoal;
 using Pong.Script.Struct;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Pong.Script
 {
     public class ControllerPong : MonoBehaviour
     {
-        [SerializeField] private StructGamePong GamePong;
-        private MessageHander _messageHander;
-        private bool gameInProgress = false;
+        [SerializeField] public StructGamePong GamePong;
+        [SerializeField] private MessageHander _messageHander;
 
-        public void lunchGame()
+
+        public void StartGame()
         {
-            gameInProgress = true;
-
-            StartCoroutine(timerStart());
+            GamePong.Ball.addingForce(RandomUnitVector());
+            Debug.Log("startGame");
         }
 
-        private int timer = 0;
-
-        IEnumerator timerStart()
+        private static Vector2 RandomUnitVector()
         {
-            timer = timer + 1;
-            Debug.Log(timer);
-            yield return new WaitForSeconds(1);
-            if (timer <= 3)
-            {
-                StartCoroutine(timerStart());
-            }
+            var random = Random.Range(5000, 4000);
+           // Debug.Log(Mathf.Cos(random));
+            //Debug.Log(Mathf.Sin(random));
+            return new Vector2(Mathf.Cos(random) * 150, Mathf.Sin(random) * 40);
         }
 
         public void Update()
@@ -58,6 +53,7 @@ namespace Pong.Script
 
             if (GamePong._structPlayer[0].Goal.hit == true)
             {
+              //  Debug.Log("ok");
                 GamePong._structPlayer[0].Goal.hit = false;
                 playerGoal(GamePong._structPlayer[1].Player);
             }
@@ -65,6 +61,8 @@ namespace Pong.Script
             if (GamePong._structPlayer[1].Goal.hit == true)
             {
                 GamePong._structPlayer[1].Goal.hit = false;
+
+
                 playerGoal(GamePong._structPlayer[0].Player);
             }
         }
@@ -72,6 +70,7 @@ namespace Pong.Script
         public void playerGoal(Player player)
         {
             var mesg = _messageHander.VictoryMesg(player);
+            player.setPlayerScrore(1);
             VictoryPrint(mesg);
             Time.timeScale = 0;
         }
@@ -80,6 +79,7 @@ namespace Pong.Script
         {
             this.GamePong.MessageInfo.text = mesg;
             this.GamePong.MessageInfo.gameObject.SetActive(true);
+            GamePong.resetGame.gameObject.SetActive(true);
         }
     }
 }

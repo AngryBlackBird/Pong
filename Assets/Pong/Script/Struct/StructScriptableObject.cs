@@ -1,7 +1,7 @@
 using System;
 using Pong.Script.Message;
-using Pong.Script.Panel;
 using Pong.Script.PlayersAndGoal;
+using Pong.Script.Struct.Panel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,5 +21,6 @@ namespace Pong.Script.Struct
         [SerializeField] public StructPlayer[] _structPlayer;
         public Ball.Ball Ball;
         public Text MessageInfo;
+        public Button resetGame;
     }
 }

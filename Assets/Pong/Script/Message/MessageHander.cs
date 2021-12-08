@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 namespace Pong.Script.Message
 {
-    
- 
+    [Serializable]
     public class MessageHander
     {
         public string VictoryMesg(Player player)

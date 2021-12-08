@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Pong.Script.Ball
@@ -6,11 +7,17 @@ namespace Pong.Script.Ball
     {
         public Rigidbody2D Rigidbody2D;
 
-        public Vector2 addlvlForce;
-        
-        public void addingForce()
+
+        public void addingForce(Vector2 addlvlForce)
         {
             Rigidbody2D.AddForce(addlvlForce);
+        }
+
+        public void ResetBall()
+        {
+            gameObject.transform.position = new Vector3(0, 0, 0);
+            Rigidbody2D.velocity = Vector2.zero;
+          //  Rigidbody2D.angularVelocity = Single.NaN;
         }
     }
 }

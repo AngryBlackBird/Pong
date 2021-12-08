@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.UI;
 
-namespace Pong.Script.Panel
+namespace Pong.Script.Struct.Panel
 {
     [Serializable]
     public struct PanelStart
